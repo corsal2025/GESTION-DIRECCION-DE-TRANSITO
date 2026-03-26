@@ -1,0 +1,59 @@
+@using System.Globalization
+@using MudBlazor
+
+<CultureInfo>
+    <MudThemeProvider @bind-IsDarkMode="@isDarkMode" Theme="@theme" />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+</CultureInfo>
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>No encontrado</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <div class="page">
+                <main role="main">
+                    <h1>Página no encontrada</h1>
+                    <p>Lo sentimos, no existe la página que buscas.</p>
+                </main>
+            </div>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+@code {
+    private bool isDarkMode = true;
+    private MudTheme theme = new MudTheme()
+    {
+        Palette = new PaletteLight()
+        {
+            Primary = "#2196F3",
+            Secondary = "#00d4ff",
+            Success = "#4CAF50",
+            Warning = "#FF9800",
+            Error = "#F44336",
+            Info = "#2196F3",
+            Dark = "#1a1a2e"
+        },
+        PaletteDark = new PaletteDark()
+        {
+            Primary = "#2196F3",
+            Secondary = "#00d4ff",
+            Success = "#4CAF50",
+            Warning = "#FF9800",
+            Error = "#F44336",
+            Info = "#2196F3",
+            Background = "#1a1a2e",
+            Surface = "#16213e"
+        }
+    };
+
+    protected override void OnInitialized()
+    {
+        isDarkMode = true;
+    }
+}

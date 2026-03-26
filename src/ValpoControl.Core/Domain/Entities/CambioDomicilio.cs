@@ -24,7 +24,7 @@ public class CambioDomicilio : BaseTramite
 
     public DateTime FechaSolicitud { get; set; } = DateTime.UtcNow;
 
-    public DateTime? FechaActualizacion { get; set; }
+    public new DateTime? FechaActualizacion { get; set; }
 
     [StringLength(100)]
     public string? ComprobanteDomicilio { get; set; }

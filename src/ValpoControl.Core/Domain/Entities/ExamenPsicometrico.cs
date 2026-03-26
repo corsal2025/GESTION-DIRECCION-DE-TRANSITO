@@ -16,7 +16,7 @@ public class ExamenPsicometrico : BaseTramite
     public required string Resultado { get; set; } // Aprobado, Rechazado, Pendiente
 
     [StringLength(500)]
-    public string? Observaciones { get; set; }
+    public new string? Observaciones { get; set; }
 
     public DateTime FechaExamen { get; set; } = DateTime.UtcNow;
 

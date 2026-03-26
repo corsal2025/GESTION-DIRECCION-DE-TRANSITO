@@ -1,0 +1,66 @@
+@inherits LayoutComponentBase
+@using MudBlazor
+
+<MudLayout>
+    <MudAppBar Elevation="1" Color="Color.Primary" Class="app-header">
+        <MudText Typo="Typo.H5" Class="app-title">
+            🏛️ ValpoControl - Gestión de Trámites
+        </MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" />
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="@drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.H6">Menú</MudText>
+        </MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+                Inicio
+            </MudNavLink>
+            <MudNavLink Href="tramites" Icon="@Icons.Material.Filled.ListAlt">
+                Trámites
+            </MudNavLink>
+            <MudNavLink Href="modulos" Icon="@Icons.Material.Filled.Dashboard">
+                Módulos
+            </MudNavLink>
+            <MudNavLink Href="reportes" Icon="@Icons.Material.Filled.BarChart">
+                Reportes
+            </MudNavLink>
+            <MudNavLink Href="configuracion" Icon="@Icons.Material.Filled.Settings">
+                Configuración
+            </MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="main-content">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+<style>
+    .app-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    .app-title {
+        color: #00d4ff;
+        font-weight: bold;
+    }
+
+    .main-content {
+        padding: 30px 20px;
+    }
+</style>
+
+@code {
+    private bool drawerOpen = true;
+
+    private void DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+    }
+}

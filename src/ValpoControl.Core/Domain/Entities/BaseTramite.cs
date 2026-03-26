@@ -46,7 +46,7 @@ public abstract class BaseTramite
     public required string UsuarioId { get; set; }
 
     [Required]
-    public string TipoModulo { get; set; } = GetType().Name;
+    public required string TipoModulo { get; set; }
 
     // Auditoría
     [StringLength(45)]

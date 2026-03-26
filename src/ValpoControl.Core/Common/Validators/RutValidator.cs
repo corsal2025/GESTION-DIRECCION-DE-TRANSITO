@@ -31,7 +31,7 @@ public static class RutValidator
         // Separar número y dígito verificador
         var partes = rutLimpio.Split('-');
         var numeroRut = partes.Length > 1 ? partes[0] : rutLimpio[..^1];
-        var dvIngresado = partes.Length > 1 ? partes[1] : rutLimpio[^1];
+        var dvIngresado = partes.Length > 1 ? partes[1] : rutLimpio[^1].ToString();
 
         // Validar número
         if (!long.TryParse(numeroRut, out var numeroRutLong))
@@ -43,7 +43,7 @@ public static class RutValidator
         // Calcular dígito verificador
         var dvCalculado = CalcularDigitoVerificador(numeroRutLong);
 
-        if (dvCalculado.ToString() != dvIngresado && dvIngresado != dvCalculado.ToString())
+        if (dvCalculado.ToString() != dvIngresado)
             return (false, $"Dígito verificador inválido. Debería ser: {dvCalculado}");
 
         return (true, "RUT válido");
@@ -73,7 +73,7 @@ public static class RutValidator
         {
             11 => '0',
             10 => 'K',
-            _ => residuo.ToString()[0]
+            _ => char.Parse(residuo.ToString())
         };
     }
 
