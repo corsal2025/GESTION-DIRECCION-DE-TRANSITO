@@ -1,4 +1,4 @@
-# 🏛️ ValpoControl - Hub Municipal de Gestión de Trámites
+# 🏛️ Hub Municipal de Gestión de Trámites
 
 Sistema centralizado en **.NET 10** y **C#** para la Municipalidad de Valparaíso. Gestiona múltiples trámites de licencias de conducir con arquitectura **Clean Architecture** y UX/UI optimizada para adultos mayores.
 
