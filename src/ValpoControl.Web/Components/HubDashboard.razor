@@ -1,0 +1,481 @@
+@page "/"
+@using MudBlazor
+@using ValpoControl.Core.Domain.Entities
+
+<PageTitle>🏛️ Hub - Gestión Dirección de Tránsito</PageTitle>
+
+<div class="hub-container">
+    <MudPaper Class="hub-header" Elevation="3">
+        <div class="header-content">
+            <h1 class="hub-title">🏛️ Hub Municipal</h1>
+            <p class="hub-subtitle">Gestión Centralizada de Trámites - Dirección de Tránsito</p>
+        </div>
+    </MudPaper>
+
+    <!-- Estadísticas Principales -->
+    <MudContainer MaxWidth="MaxWidth.Large" Class="stats-section">
+        <MudText Typo="Typo.H4" Class="section-title">📊 Estadísticas Generales</MudText>
+
+        <MudGrid Spacing="3">
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="stat-card stat-card-primary" Elevation="2">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-value">@TotalTramites</div>
+                    <div class="stat-label">Trámites Totales</div>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="stat-card stat-card-success" Elevation="2">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value">@TramitesCompletados</div>
+                    <div class="stat-label">Completados</div>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="stat-card stat-card-warning" Elevation="2">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value">@TramitesEnProceso</div>
+                    <div class="stat-label">En Proceso</div>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Class="stat-card stat-card-danger" Elevation="2">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value">@TramitesRechazados</div>
+                    <div class="stat-label">Rechazados</div>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+
+    <!-- Módulos Municipales -->
+    <MudContainer MaxWidth="MaxWidth.Large" Class="modules-section">
+        <MudText Typo="Typo.H4" Class="section-title">🎯 Módulos Disponibles</MudText>
+
+        <MudGrid Spacing="3">
+            @foreach (var modulo in Modulos)
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <MudCard Class="modulo-card" Elevation="2">
+                        <MudCardContent>
+                            <div class="card-icon">@modulo.Icon</div>
+                            <MudText Typo="Typo.H6" Class="modulo-title">@modulo.Nombre</MudText>
+                            <MudText Typo="Typo.Body2" Color="Color.TextSecondary">@modulo.Descripcion</MudText>
+
+                            <MudDivider Class="my-3" />
+
+                            <div class="modulo-stats">
+                                <div class="stat-row">
+                                    <span class="stat-label-small">Registros:</span>
+                                    <span class="stat-value-small">@modulo.CantidadRegistros</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="stat-label-small">Estado:</span>
+                                    <MudChip Size="Size.Small" Color="@GetColorEstado(modulo.Estado)">
+                                        @modulo.Estado
+                                    </MudChip>
+                                </div>
+                            </div>
+                        </MudCardContent>
+
+                        <MudCardActions Class="card-actions">
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Size="Size.Large">
+                                Ver Módulo →
+                            </MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
+
+    <!-- Últimas Actividades -->
+    <MudContainer MaxWidth="MaxWidth.Large" Class="activity-section">
+        <MudText Typo="Typo.H4" Class="section-title">📜 Últimas Actividades</MudText>
+
+        <MudPaper Class="activity-list" Elevation="2">
+            @if (UltimasActividades.Any())
+            {
+                @foreach (var actividad in UltimasActividades)
+                {
+                    <div class="activity-item">
+                        <div class="activity-icon">@actividad.Icon</div>
+                        <div class="activity-content">
+                            <div class="activity-title">@actividad.Titulo</div>
+                            <div class="activity-description">@actividad.Descripcion</div>
+                            <div class="activity-time">@actividad.Fecha.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+                    </div>
+                    <MudDivider />
+                }
+            }
+            else
+            {
+                <MudText Class="no-data">Sin actividades registradas</MudText>
+            }
+        </MudPaper>
+    </MudContainer>
+
+    <!-- Sección de Acciones Rápidas -->
+    <MudContainer MaxWidth="MaxWidth.Large" Class="actions-section">
+        <MudText Typo="Typo.H4" Class="section-title">⚡ Acciones Rápidas</MudText>
+
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="6" md="3">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Size="Size.Large" Class="action-btn">
+                    ➕ Nuevo Trámite
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true" Size="Size.Large" Class="action-btn">
+                    🔍 Buscar Trámite
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudButton Variant="Variant.Filled" Color="Color.Info" FullWidth="true" Size="Size.Large" Class="action-btn">
+                    📊 Reportes
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" Size="Size.Large" Class="action-btn">
+                    ⚙️ Configuración
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</div>
+
+@code {
+    private int TotalTramites = 1250;
+    private int TramitesCompletados = 845;
+    private int TramitesEnProceso = 310;
+    private int TramitesRechazados = 95;
+
+    private List<ModuloInfo> Modulos = new();
+    private List<ActividadInfo> UltimasActividades = new();
+
+    protected override void OnInitialized()
+    {
+        CargarModulos();
+        CargarActividades();
+    }
+
+    private void CargarModulos()
+    {
+        Modulos = new List<ModuloInfo>
+        {
+            new("Gestión F8", "📁 Documentos Administrativos", "Gestiona documentos y carpetas", 245, "Activo"),
+            new("Módulo 12", "📋 Gestión Administrativa", "Trámites administrativos con folio", 156, "Activo"),
+            new("Módulo 16", "🔖 Registro Interno", "Sistema de registro interno", 89, "Activo"),
+            new("Hoja de Ruta", "🛤️ Trazabilidad", "Seguimiento de etapas del proceso", 312, "Activo"),
+            new("Examen Psicométrico", "🧠 Evaluación Psicológica", "Evaluación psicométrica para licencias", 156, "Activo"),
+            new("Examen Teórico", "📚 Evaluación Teórica", "Examen de leyes de tránsito", 234, "Activo"),
+            new("Cambio Domicilio", "🏠 Actualización de Domicilio", "Cambios de domicilio del titular", 67, "Activo"),
+            new("Gestión Licencias", "🎫 Licencias de Conducir", "Emisión y gestión de licencias", 445, "Activo")
+        };
+    }
+
+    private void CargarActividades()
+    {
+        UltimasActividades = new List<ActividadInfo>
+        {
+            new("✅", "Trámite completado", "RUT: 12.345.678-K - Gestión F8", DateTime.Now.AddHours(-1)),
+            new("⏳", "En proceso", "RUT: 23.456.789-1 - Módulo 12", DateTime.Now.AddHours(-2)),
+            new("🔄", "Estado actualizado", "RUT: 34.567.890-K - Hoja de Ruta", DateTime.Now.AddHours(-3)),
+            new("📝", "Nuevo registro", "RUT: 45.678.901-9 - Examen Teórico", DateTime.Now.AddHours(-4)),
+            new("✅", "Aprobado", "RUT: 56.789.012-8 - Examen Psicométrico", DateTime.Now.AddHours(-5))
+        };
+    }
+
+    private Color GetColorEstado(string estado) =>
+        estado switch
+        {
+            "Activo" => Color.Success,
+            "Inactivo" => Color.Error,
+            _ => Color.Default
+        };
+
+    public class ModuloInfo
+    {
+        public string Nombre { get; }
+        public string Icon { get; }
+        public string Descripcion { get; }
+        public int CantidadRegistros { get; }
+        public string Estado { get; }
+
+        public ModuloInfo(string nombre, string icon, string descripcion, int cantidad, string estado)
+        {
+            Nombre = nombre;
+            Icon = icon;
+            Descripcion = descripcion;
+            CantidadRegistros = cantidad;
+            Estado = estado;
+        }
+    }
+
+    public class ActividadInfo
+    {
+        public string Icon { get; }
+        public string Titulo { get; }
+        public string Descripcion { get; }
+        public DateTime Fecha { get; }
+
+        public ActividadInfo(string icon, string titulo, string descripcion, DateTime fecha)
+        {
+            Icon = icon;
+            Titulo = titulo;
+            Descripcion = descripcion;
+            Fecha = fecha;
+        }
+    }
+}
+
+<style>
+    .hub-container {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #fff;
+    }
+
+    .hub-header {
+        background: rgba(0, 212, 255, 0.1) !important;
+        border-left: 5px solid #00d4ff;
+        padding: 40px;
+        margin-bottom: 40px;
+        border-radius: 8px;
+    }
+
+    .header-content {
+        text-align: center;
+    }
+
+    .hub-title {
+        font-size: 2.5rem !important;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #00d4ff;
+    }
+
+    .hub-subtitle {
+        font-size: 1.25rem;
+        color: #aaa;
+    }
+
+    .section-title {
+        margin-bottom: 25px;
+        color: #00d4ff;
+        font-weight: bold;
+    }
+
+    .stats-section {
+        margin-bottom: 60px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 8px;
+        padding: 25px;
+        text-align: center;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: #00d4ff;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2) !important;
+    }
+
+    .stat-card-primary { border-top: 4px solid #2196F3; }
+    .stat-card-success { border-top: 4px solid #4CAF50; }
+    .stat-card-warning { border-top: 4px solid #FF9800; }
+    .stat-card-danger { border-top: 4px solid #F44336; }
+
+    .stat-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #00d4ff;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        color: #aaa;
+    }
+
+    .modules-section {
+        margin-bottom: 60px;
+    }
+
+    .modulo-card {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        min-height: 350px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modulo-card:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: #00d4ff;
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3) !important;
+    }
+
+    .card-icon {
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .modulo-title {
+        color: #00d4ff;
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    .modulo-stats {
+        margin-top: 15px;
+    }
+
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .stat-label-small {
+        color: #aaa;
+    }
+
+    .stat-value-small {
+        color: #00d4ff;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .card-actions {
+        margin-top: auto;
+    }
+
+    .activity-section {
+        margin-bottom: 60px;
+    }
+
+    .activity-list {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+
+    .activity-icon {
+        font-size: 2rem;
+        margin-right: 20px;
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #00d4ff;
+        margin-bottom: 5px;
+    }
+
+    .activity-description {
+        color: #aaa;
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+
+    .activity-time {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .actions-section {
+        margin-bottom: 40px;
+    }
+
+    .action-btn {
+        font-size: 1.1rem !important;
+        padding: 15px !important;
+        height: 60px !important;
+    }
+
+    /* Accesibilidad para adultos mayores */
+    @media (max-width: 768px) {
+        .hub-title {
+            font-size: 1.8rem !important;
+        }
+
+        .stat-card {
+            min-height: 180px;
+            padding: 20px;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+        }
+
+        .modulo-card {
+            min-height: 320px;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .modulo-title {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Focus para navegación por teclado */
+    .action-btn:focus,
+    .modulo-card:focus,
+    .stat-card:focus {
+        outline: 3px solid #00d4ff;
+        outline-offset: 2px;
+    }
+</style>

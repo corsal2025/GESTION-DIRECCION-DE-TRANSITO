@@ -1,0 +1,43 @@
+# .NET
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.userprefs
+*.suo
+.vs/
+.vscode/
+
+# Entity Framework
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# NuGet
+.nuget/
+*.nupkg
+*.snupkg
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+publish/
+dist/
+
+# Local development
+appsettings.local.json
+appsettings.Development.json
