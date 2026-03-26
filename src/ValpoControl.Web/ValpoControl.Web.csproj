@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.5" />
-    <PackageReference Include="MudBlazor" Version="7.14.0" />
+    <PackageReference Include="MudBlazor" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

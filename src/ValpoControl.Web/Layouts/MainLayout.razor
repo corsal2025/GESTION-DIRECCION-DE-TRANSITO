@@ -1,59 +1,175 @@
 @inherits LayoutComponentBase
-@using MudBlazor
 
-<MudLayout>
-    <MudAppBar Elevation="1" Color="Color.Primary" Class="app-header">
-        <MudText Typo="Typo.H5" Class="app-title">
-            🏛️ ValpoControl - Gestión de Trámites
-        </MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" />
-        <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" />
-    </MudAppBar>
+<div class="app-layout">
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-title">
+                <button class="menu-toggle" @onclick="DrawerToggle">☰</button>
+                <h1 class="app-title">🏛️ ValpoControl - Gestión de Trámites</h1>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" title="Configuración">⚙️</button>
+                <button class="icon-btn" title="Cerrar sesión">🚪</button>
+            </div>
+        </div>
+    </header>
 
-    <MudDrawer @bind-Open="@drawerOpen" Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.H6">Menú</MudText>
-        </MudDrawerHeader>
-        <MudNavMenu>
-            <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
-                Inicio
-            </MudNavLink>
-            <MudNavLink Href="tramites" Icon="@Icons.Material.Filled.ListAlt">
-                Trámites
-            </MudNavLink>
-            <MudNavLink Href="modulos" Icon="@Icons.Material.Filled.Dashboard">
-                Módulos
-            </MudNavLink>
-            <MudNavLink Href="reportes" Icon="@Icons.Material.Filled.BarChart">
-                Reportes
-            </MudNavLink>
-            <MudNavLink Href="configuracion" Icon="@Icons.Material.Filled.Settings">
-                Configuración
-            </MudNavLink>
-        </MudNavMenu>
-    </MudDrawer>
+    <div class="app-body">
+        @if (drawerOpen)
+        {
+            <nav class="app-sidebar">
+                <div class="sidebar-header">
+                    <h2>Menú</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="" class="nav-link">🏠 Inicio</a></li>
+                    <li><a href="tramites" class="nav-link">📋 Trámites</a></li>
+                    <li><a href="modulos" class="nav-link">📊 Módulos</a></li>
+                    <li><a href="reportes" class="nav-link">📈 Reportes</a></li>
+                    <li><a href="configuracion" class="nav-link">⚙️ Configuración</a></li>
+                </ul>
+            </nav>
+        }
 
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="main-content">
+        <main class="main-content">
             @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+        </main>
+    </div>
+</div>
 
 <style>
+    .app-layout {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #f5f5f5;
+    }
+
     .app-header {
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: white;
+        padding: 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        max-width: 100%;
+    }
+
+    .header-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex: 1;
+    }
+
+    .menu-toggle {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+        background: rgba(0, 212, 255, 0.2);
     }
 
     .app-title {
+        margin: 0;
+        font-size: 1.3rem;
         color: #00d4ff;
         font-weight: bold;
     }
 
-    .main-content {
-        padding: 30px 20px;
+    .header-actions {
+        display: flex;
+        gap: 10px;
     }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+    }
+
+    .icon-btn:hover {
+        background: rgba(0, 212, 255, 0.2);
+    }
+
+    .app-body {
+        display: flex;
+        flex: 1;
+    }
+
+    .app-sidebar {
+        width: 250px;
+        background: white;
+        border-right: 1px solid #e0e0e0;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+        position: fixed;
+        height: calc(100vh - 55px);
+        top: 55px;
+        left: 0;
+        overflow-y: auto;
+        z-index: 99;
+    }
+
+    .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        background: #f9f9f9;
+    }
+
+    .sidebar-header h2 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .nav-menu {
+        list-style: none;
+        padding: 10px 0;
+        margin: 0;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 12px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+
+    .nav-link:hover {
+        background: #f0f0f0;
+        color: #00a8e8;
+        border-left-color: #00a8e8;
+    }
+
+    .main-content {
+        flex: 1;
+        margin-left: 250px;
+        padding: 30px 20px;
+        background: white;
+    }
+
 </style>
 
 @code {

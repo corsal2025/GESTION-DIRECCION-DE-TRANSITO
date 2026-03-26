@@ -2,17 +2,13 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor.Services;
 using ValpoControl.Infrastructure.Extensions;
 using ValpoControl.Infrastructure.Persistence;
+using ValpoControl.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Agregar servicios
 builder.Services.AddRazorComponents()
-    .AddInteractiveWebAssemblyComponents();
-
-builder.Services.AddScoped(sp => new HttpClient
-{
-    BaseAddress = new Uri(sp.GetRequiredService<NavigationManager>().BaseUri)
-});
+    .AddInteractiveServerComponents();
 
 // MudBlazor
 builder.Services.AddMudServices();
@@ -41,7 +37,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveWebAssemblyRenderMode();
+    .AddInteractiveServerRenderMode();
 
 // Crear base de datos si no existe
 using (var scope = app.Services.CreateScope())

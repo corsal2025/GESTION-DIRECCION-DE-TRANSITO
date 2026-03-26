@@ -1,102 +1,92 @@
 @page "/"
-@using MudBlazor
-@using ValpoControl.Core.Domain.Entities
 
 <PageTitle>🏛️ Hub - Gestión Dirección de Tránsito</PageTitle>
 
 <div class="hub-container">
-    <MudPaper Class="hub-header" Elevation="3">
+    <div class="hub-header">
         <div class="header-content">
             <h1 class="hub-title">🏛️ Hub Municipal</h1>
             <p class="hub-subtitle">Gestión Centralizada de Trámites - Dirección de Tránsito</p>
         </div>
-    </MudPaper>
+    </div>
 
     <!-- Estadísticas Principales -->
-    <MudContainer MaxWidth="MaxWidth.Large" Class="stats-section">
-        <MudText Typo="Typo.H6" Class="section-title">📊 Estadísticas Generales</MudText>
+    <div class="container stats-section">
+        <h2 class="section-title">📊 Estadísticas Generales</h2>
 
-        <MudGrid Spacing="3">
-            <MudItem xs="12" sm="6" md="3">
-                <MudPaper Class="stat-card stat-card-primary" Elevation="2">
+        <div class="grid">
+            <div class="grid-item">
+                <div class="stat-card stat-card-primary">
                     <div class="stat-icon">📋</div>
                     <div class="stat-value">@TotalTramites</div>
                     <div class="stat-label">Trámites Totales</div>
-                </MudPaper>
-            </MudItem>
+                </div>
+            </div>
 
-            <MudItem xs="12" sm="6" md="3">
-                <MudPaper Class="stat-card stat-card-success" Elevation="2">
+            <div class="grid-item">
+                <div class="stat-card stat-card-success">
                     <div class="stat-icon">✅</div>
                     <div class="stat-value">@TramitesCompletados</div>
                     <div class="stat-label">Completados</div>
-                </MudPaper>
-            </MudItem>
+                </div>
+            </div>
 
-            <MudItem xs="12" sm="6" md="3">
-                <MudPaper Class="stat-card stat-card-warning" Elevation="2">
+            <div class="grid-item">
+                <div class="stat-card stat-card-warning">
                     <div class="stat-icon">⏳</div>
                     <div class="stat-value">@TramitesEnProceso</div>
                     <div class="stat-label">En Proceso</div>
-                </MudPaper>
-            </MudItem>
+                </div>
+            </div>
 
-            <MudItem xs="12" sm="6" md="3">
-                <MudPaper Class="stat-card stat-card-danger" Elevation="2">
+            <div class="grid-item">
+                <div class="stat-card stat-card-danger">
                     <div class="stat-icon">❌</div>
                     <div class="stat-value">@TramitesRechazados</div>
                     <div class="stat-label">Rechazados</div>
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
-    </MudContainer>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Módulos Municipales -->
-    <MudContainer MaxWidth="MaxWidth.Large" Class="modules-section">
-        <MudText Typo="Typo.H6" Class="section-title">🎯 Módulos Disponibles</MudText>
+    <div class="container modules-section">
+        <h2 class="section-title">🎯 Módulos Disponibles</h2>
 
-        <MudGrid Spacing="3">
+        <div class="grid grid-3">
             @foreach (var modulo in Modulos)
             {
-                <MudItem xs="12" sm="6" md="4" lg="3">
-                    <MudCard Class="modulo-card" Elevation="2">
-                        <MudCardContent>
-                            <div class="card-icon">@modulo.Icon</div>
-                            <MudText Typo="Typo.H6" Class="modulo-title">@modulo.Nombre</MudText>
-                            <MudText Typo="Typo.Body1">@modulo.Descripcion</MudText>
+                <div class="grid-item">
+                    <div class="modulo-card">
+                        <div class="card-icon">@modulo.Icon</div>
+                        <h3 class="modulo-title">@modulo.Nombre</h3>
+                        <p class="modulo-description">@modulo.Descripcion</p>
 
-                            <MudDivider Class="my-3" />
+                        <hr class="divider" />
 
-                            <div class="modulo-stats">
-                                <div class="stat-row">
-                                    <span class="stat-label-small">Registros:</span>
-                                    <span class="stat-value-small">@modulo.CantidadRegistros</span>
-                                </div>
-                                <div class="stat-row">
-                                    <span class="stat-label-small">Estado:</span>
-                                    <MudChip Size="Size.Small" Color="Color.Success">
-                                        @modulo.Estado
-                                    </MudChip>
-                                </div>
+                        <div class="modulo-stats">
+                            <div class="stat-row">
+                                <span class="stat-label-small">Registros:</span>
+                                <span class="stat-value-small">@modulo.CantidadRegistros</span>
                             </div>
-                        </MudCardContent>
+                            <div class="stat-row">
+                                <span class="stat-label-small">Estado:</span>
+                                <span class="chip chip-success">@modulo.Estado</span>
+                            </div>
+                        </div>
 
-                        <MudCardActions Class="card-actions">
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Size="Size.Large">
-                                Ver Módulo →
-                            </MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
+                        <button class="btn btn-primary btn-full">Ver Módulo →</button>
+                    </div>
+                </div>
             }
-        </MudGrid>
-    </MudContainer>
+        </div>
+    </div>
 
     <!-- Últimas Actividades -->
-    <MudContainer MaxWidth="MaxWidth.Large" Class="activity-section">
-        <MudText Typo="Typo.H6" Class="section-title">📜 Últimas Actividades</MudText>
+    <div class="container activity-section">
+        <h2 class="section-title">📜 Últimas Actividades</h2>
 
-        <MudPaper Class="activity-list" Elevation="2">
+        <div class="activity-list">
             @if (UltimasActividades.Any())
             {
                 @foreach (var actividad in UltimasActividades)
@@ -109,43 +99,35 @@
                             <div class="activity-time">@actividad.Fecha.ToString("dd/MM/yyyy HH:mm")</div>
                         </div>
                     </div>
-                    <MudDivider />
+                    <hr class="divider" />
                 }
             }
             else
             {
-                <MudText Class="no-data">Sin actividades registradas</MudText>
+                <p class="no-data">Sin actividades registradas</p>
             }
-        </MudPaper>
-    </MudContainer>
+        </div>
+    </div>
 
     <!-- Sección de Acciones Rápidas -->
-    <MudContainer MaxWidth="MaxWidth.Large" Class="actions-section">
-        <MudText Typo="Typo.H6" Class="section-title">⚡ Acciones Rápidas</MudText>
+    <div class="container actions-section">
+        <h2 class="section-title">⚡ Acciones Rápidas</h2>
 
-        <MudGrid Spacing="2">
-            <MudItem xs="12" sm="6" md="3">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Size="Size.Large" Class="action-btn">
-                    ➕ Nuevo Trámite
-                </MudButton>
-            </MudItem>
-            <MudItem xs="12" sm="6" md="3">
-                <MudButton Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true" Size="Size.Large" Class="action-btn">
-                    🔍 Buscar Trámite
-                </MudButton>
-            </MudItem>
-            <MudItem xs="12" sm="6" md="3">
-                <MudButton Variant="Variant.Filled" Color="Color.Info" FullWidth="true" Size="Size.Large" Class="action-btn">
-                    📊 Reportes
-                </MudButton>
-            </MudItem>
-            <MudItem xs="12" sm="6" md="3">
-                <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" Size="Size.Large" Class="action-btn">
-                    ⚙️ Configuración
-                </MudButton>
-            </MudItem>
-        </MudGrid>
-    </MudContainer>
+        <div class="grid grid-4">
+            <div class="grid-item">
+                <button class="btn btn-primary btn-full btn-lg">➕ Nuevo Trámite</button>
+            </div>
+            <div class="grid-item">
+                <button class="btn btn-secondary btn-full btn-lg">🔍 Buscar Trámite</button>
+            </div>
+            <div class="grid-item">
+                <button class="btn btn-info btn-full btn-lg">📊 Reportes</button>
+            </div>
+            <div class="grid-item">
+                <button class="btn btn-warning btn-full btn-lg">⚙️ Configuración</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @code {
@@ -231,6 +213,7 @@
         min-height: 100vh;
         padding: 20px;
         color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
 
     .hub-header {
@@ -250,21 +233,49 @@
         font-weight: bold;
         margin-bottom: 10px;
         color: #00d4ff;
+        margin: 0 0 10px 0;
     }
 
     .hub-subtitle {
         font-size: 1.25rem;
         color: #aaa;
+        margin: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .section-title {
         margin-bottom: 25px;
         color: #00d4ff;
         font-weight: bold;
+        font-size: 1.5rem;
+        margin-top: 0;
     }
 
     .stats-section {
         margin-bottom: 60px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .grid-item {
+        width: 100%;
     }
 
     .stat-card {
@@ -318,6 +329,7 @@
         background: rgba(255, 255, 255, 0.05) !important;
         border: 1px solid rgba(0, 212, 255, 0.3);
         border-radius: 8px;
+        padding: 20px;
         transition: all 0.3s ease;
         min-height: 350px;
         display: flex;
@@ -341,10 +353,19 @@
         color: #00d4ff;
         font-weight: bold;
         margin-bottom: 10px;
+        margin-top: 0;
+        font-size: 1.25rem;
+    }
+
+    .modulo-description {
+        color: #ccc;
+        margin-bottom: 15px;
+        margin-top: 0;
     }
 
     .modulo-stats {
         margin-top: 15px;
+        flex-grow: 1;
     }
 
     .stat-row {
@@ -365,8 +386,24 @@
         font-size: 1.2rem;
     }
 
-    .card-actions {
-        margin-top: auto;
+    .divider {
+        border: none;
+        border-top: 1px solid rgba(0, 212, 255, 0.2);
+        margin: 15px 0;
+    }
+
+    .chip {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .chip-success {
+        background: rgba(76, 175, 80, 0.2);
+        color: #4CAF50;
+        border: 1px solid rgba(76, 175, 80, 0.4);
     }
 
     .activity-section {
@@ -418,15 +455,77 @@
         padding: 40px;
         color: #666;
         font-size: 1.1rem;
+        margin: 0;
     }
 
     .actions-section {
         margin-bottom: 40px;
     }
 
-    .action-btn {
-        font-size: 1.1rem !important;
-        padding: 15px !important;
-        height: 60px !important;
+    .btn {
+        border: none;
+        border-radius: 6px;
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
     }
+
+    .btn-full {
+        width: 100%;
+    }
+
+    .btn-lg {
+        padding: 18px 24px;
+        font-size: 1.1rem;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #00a8e8 0%, #0081cf 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 168, 232, 0.3);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+    }
+
+    .btn-info {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+    }
+
+    .btn-info:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(23, 162, 184, 0.3);
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #000;
+    }
+
+    .btn-warning:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
+    }
+
 </style>
